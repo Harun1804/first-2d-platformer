@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxis(StringValue.AxisHorizontal);
         body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocityY);
 
         // Flip the player sprite based on the direction they are moving
@@ -32,20 +32,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Play the animation based on the player's movement
-        anim.SetBool("IsRun", horizontalInput != 0);
-        anim.SetBool("IsGrounded", isGrounded);
+        anim.SetBool(StringValue.IsRun, horizontalInput != 0);
+        anim.SetBool(StringValue.IsGrounded, isGrounded);
     }
 
     private void Jump() 
     {
         body.linearVelocity = new Vector2(body.linearVelocityX, speed);
-        anim.SetTrigger("Jump");
+        anim.SetTrigger(StringValue.Jump);
         isGrounded = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground") {
+        if (collision.gameObject.tag == StringValue.GroundTag) {
             isGrounded = true;
         }
     }
