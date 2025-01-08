@@ -9,6 +9,7 @@ public static class StringValue
 
     // Tags
     public static readonly string GroundTag = "Ground";
+    public static readonly string PlayerTag = "Player";
 
     // Animation Parameters
     public static readonly string IsRun = "IsRun";
