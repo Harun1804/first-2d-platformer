@@ -3,22 +3,27 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
+    [SerializeField] private float jumpPower = 20f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask wallLayer;
+
     private Rigidbody2D body;
     private Animator anim;
-
-    private bool isGrounded;
+    private BoxCollider2D boxCollider2D;
+    private float wallJumpCooldown;
+    private float horizontalInput;
 
     public void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxis(StringValue.AxisHorizontal);
-        body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocityY);
+        horizontalInput = Input.GetAxis(StringValue.AxisHorizontal);
 
         // Flip the player sprite based on the direction they are moving
         if (horizontalInput > 0.01f) {
@@ -27,26 +32,54 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(-1, 1);
         }
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded) {
-            Jump();
-        }
-
         // Play the animation based on the player's movement
         anim.SetBool(StringValue.IsRun, horizontalInput != 0);
-        anim.SetBool(StringValue.IsGrounded, isGrounded);
+        anim.SetBool(StringValue.IsGrounded, IsGrounded());
+
+        // Wall Jump
+        if (wallJumpCooldown > 0.2f) {
+            body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocityY);
+
+            if (OnWall() && !IsGrounded()) {
+                body.gravityScale = 0;
+                body.linearVelocity = Vector2.zero;
+            } else {
+                body.gravityScale = 7;
+            }
+
+            if (Input.GetKey(KeyCode.Space)) {
+                Jump();
+            }
+        } else {
+            wallJumpCooldown += Time.deltaTime;
+        }
     }
 
     private void Jump() 
     {
-        body.linearVelocity = new Vector2(body.linearVelocityX, speed);
-        anim.SetTrigger(StringValue.Jump);
-        isGrounded = false;
+        if (IsGrounded()) {
+            body.linearVelocity = new Vector2(body.linearVelocityX, jumpPower);
+            anim.SetTrigger(StringValue.Jump);
+        } else if (OnWall() && !IsGrounded()) {
+            if (horizontalInput == 0) {
+                body.linearVelocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
+                transform.localScale = new Vector2(-Mathf.Sign(transform.localScale.x), transform.localScale.y);
+            } else {
+                body.linearVelocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
+            }
+            wallJumpCooldown = 0;
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private bool IsGrounded() 
     {
-        if (collision.gameObject.tag == StringValue.GroundTag) {
-            isGrounded = true;
-        }
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        return raycastHit2D.collider != null;
+    }
+
+    private bool OnWall()
+    {
+        RaycastHit2D raycastHit2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
+        return raycastHit2D.collider != null;
     }
 }
