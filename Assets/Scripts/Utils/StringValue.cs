@@ -17,4 +17,6 @@ public static class StringValue
     public static readonly string Jump = "Jump";
     public static readonly string Attack = "Attack";
     public static readonly string Explode = "Explode";
+    public static readonly string Hurt = "Hurt";
+    public static readonly string Die = "Die";
 }
