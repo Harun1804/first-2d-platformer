@@ -627,10 +627,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 434310551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -379, y: 367.3256}
-  m_SizeDelta: {x: 1191.3865, y: 110.6512}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 562, y: -183.67441}
+  m_SizeDelta: {x: 1191.3865, y: 110.651184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &104563910
 MonoBehaviour:
@@ -1595,7 +1595,7 @@ GameObject:
   - component: {fileID: 352569426}
   - component: {fileID: 352569428}
   - component: {fileID: 352569429}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1826,6 +1826,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  iFramesDuration: 1
+  numberOfFlashes: 3
 --- !u!1 &398889536
 GameObject:
   m_ObjectHideFlags: 0
@@ -6206,7 +6208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1374866506}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -9119,10 +9121,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 434310551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -379, y: 367.3256}
-  m_SizeDelta: {x: 1191.3865, y: 110.6512}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 562, y: -183.67441}
+  m_SizeDelta: {x: 1191.3865, y: 110.651184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2074543794
 MonoBehaviour:
