@@ -42,14 +42,14 @@ public class Firetrap : EnemyDamage
         yield return new WaitForSeconds(activationDelay);
         spriteRenderer.color = Color.white;
         isActive = true;
-        anim.SetBool(StringValue.IsFiretrapActive, true);
+        anim.SetBool(TrapAnimationString.IsFiretrapActive, true);
         #endregion
 
         #region Deactivate Firetrap
         yield return new WaitForSeconds(activeTime);
         isActive = false;
         isTriggered = false;
-        anim.SetBool(StringValue.IsFiretrapActive, false);
+        anim.SetBool(TrapAnimationString.IsFiretrapActive, false);
         #endregion
     }
 }

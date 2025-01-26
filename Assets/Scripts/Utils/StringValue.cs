@@ -10,14 +10,12 @@ public static class StringValue
     // Tags
     public static readonly string GroundTag = "Ground";
     public static readonly string PlayerTag = "Player";
+    public static readonly string EnemyTag = "Enemy";
 
-    // Animation Parameters
-    public static readonly string IsRun = "IsRun";
-    public static readonly string IsGrounded = "IsGrounded";
-    public static readonly string Jump = "Jump";
-    public static readonly string Attack = "Attack";
+    // Animation Fireball Explode
     public static readonly string Explode = "Explode";
+
+    // Animation Global
     public static readonly string Hurt = "Hurt";
     public static readonly string Die = "Die";
-    public static readonly string IsFiretrapActive = "IsActivated";
 }

@@ -37,6 +37,10 @@ public class Projectile : MonoBehaviour
         isHit = true;
         boxCollider2D.enabled = false;
         anim.SetTrigger(StringValue.Explode);
+
+        if (collision.tag.Equals(StringValue.EnemyTag)) {
+            collision.GetComponent<Health>().TakeDamage(1);
+        }
     }
 
     public void SetDirection(float _direction) 

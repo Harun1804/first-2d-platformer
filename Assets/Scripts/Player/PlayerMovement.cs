@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Play the animation based on the player's movement
-        anim.SetBool(StringValue.IsRun, horizontalInput != 0);
-        anim.SetBool(StringValue.IsGrounded, IsGrounded());
+        anim.SetBool(PlayerAnimationString.IsRun, horizontalInput != 0);
+        anim.SetBool(PlayerAnimationString.IsGrounded, IsGrounded());
 
         // Wall Jump
         if (wallJumpCooldown > 0.2f) {
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded()) {
             body.linearVelocity = new Vector2(body.linearVelocityX, jumpPower);
-            anim.SetTrigger(StringValue.Jump);
+            anim.SetTrigger(PlayerAnimationString.Jump);
         } else if (OnWall() && !IsGrounded()) {
             if (horizontalInput == 0) {
                 body.linearVelocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);

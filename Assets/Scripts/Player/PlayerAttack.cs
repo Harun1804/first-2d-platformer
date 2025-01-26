@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Attack()
     {
-        anim.SetTrigger(StringValue.Attack);
+        anim.SetTrigger(PlayerAnimationString.Attack);
         cooldownTimer = 0;
 
         fireballs[FindFireball()].transform.position = firePoint.position;
