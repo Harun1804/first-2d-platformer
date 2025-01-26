@@ -13,14 +13,25 @@ public class Firetrap : EnemyDamage
     private bool isTriggered;
     private bool isActive;
 
+    private Health playerHealth;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    private void Update()
+    {
+        if (playerHealth != null && isActive) {
+            playerHealth.TakeDamage(damage);
+        }
+    }
+
     private new void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(StringValue.PlayerTag)) {
+            playerHealth = collision.GetComponent<Health>();
             if (!isTriggered) {
                 // trigger the firetrap
                 StartCoroutine(ActivateFiretrap());
@@ -29,6 +40,13 @@ public class Firetrap : EnemyDamage
             if (isActive) {
                 base.OnTriggerEnter2D(collision);
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag(StringValue.PlayerTag)) {
+            playerHealth = null;
         }
     }
 

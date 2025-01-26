@@ -10,6 +10,10 @@ public class Health : MonoBehaviour
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
 
+    [Header("Components")]
+    [SerializeField] private Behaviour[] components;
+    private bool isInvulnerable;
+
     public float currentHealth { get; private set; }
     private Animator anim;
     private SpriteRenderer spriteRenderer;
@@ -24,6 +28,9 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float _damage)
     {
+        if (isInvulnerable) {
+            return;
+        }
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
         if (currentHealth > 0) {
             // Player hurt
@@ -33,13 +40,11 @@ public class Health : MonoBehaviour
             // Player dead
             if (!isDead) {                
                 anim.SetTrigger(StringValue.Die);
-                if (GetComponent<PlayerMovement>() != null) {
-                    // Player Dead
-                    GetComponent<PlayerMovement>().enabled = false;
-                } else {
-                    GetComponentInParent<EnemyPatrol>().enabled = false;
-                    GetComponent<MeleeEnemy>().enabled = false;
+
+                foreach (Behaviour component in components) {
+                    component.enabled = false;
                 }
+
                 isDead = true;
             }
         }
@@ -51,6 +56,7 @@ public class Health : MonoBehaviour
     }
 
     private IEnumerator Invunerability() {
+        isInvulnerable = true;
         Physics2D.IgnoreLayerCollision(7, 8, true);
 
         for (int i = 0; i < numberOfFlashes; i++) {
@@ -60,5 +66,10 @@ public class Health : MonoBehaviour
             yield return new WaitForSeconds(iFramesDuration / (numberOfFlashes * 2));
         }
         Physics2D.IgnoreLayerCollision(7, 8, false);
+        isInvulnerable = false;
+    }
+
+    private void Deactive() {
+        gameObject.SetActive(false);
     }
 }
